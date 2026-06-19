@@ -1,0 +1,25 @@
+name: lint markdown
+
+on: [workflow_dispatch, push, pull_request]
+
+jobs:
+  lint-markdown:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set node version
+        uses: actions/setup-node@v6
+
+      - name: Install lint-md
+        run: npm install @lint-md/cli -g
+
+      - name: Install zhlint
+        run: npm install zhlint -g
+
+      - name: Lint markdown
+        run: lint-md 'README.md' --config=.lintmdrc --threads
+
+#      - name: Lint zh_CN
+#        run: zhlint 'README.md' --config=.zhlintrc
